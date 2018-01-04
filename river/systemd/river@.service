@@ -1,0 +1,12 @@
+[Unit]
+Description=River
+
+[Service]
+WorkingDirectory=/var/lib/river/%I
+Exec=/usr/bin/node river5.js
+User=river
+Group=river
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
