@@ -50,6 +50,7 @@ package() {
     cp ${startdir}/tmpl/*.tmpl ${pkgdir}/usr/share/${pkgname}/tmpl
 
 # Code
-    mkdir -p ${pkgdir}/usr/share/${pkgname}
+    mkdir -p ${pkgdir}/usr/share/${pkgname}/bin
     cp -r -p ${srcdir}/river5/* ${pkgdir}/usr/share/${pkgname}/
+    install -m755 ${startdir}/bin/* -t ${pkgdir}/usr/share/${pkgname}/bin
 }

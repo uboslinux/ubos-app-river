@@ -82,6 +82,12 @@
                     "type"         : "systemd-service",
                     "name"         : "river@${appconfig.appconfigid}",
                 }
+            ],
+            "installers" : [
+                {
+                    "type"   : "perlscript",
+                    "source" : "bin/populate.pl"
+                }
             ]
         }
     }
