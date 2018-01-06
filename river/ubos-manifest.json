@@ -1,0 +1,88 @@
+{
+    "type" : "app",
+
+    "roles" : {
+        "apache2" : {
+            "fixedcontext" : "",
+            "apache2modules" : [
+                "headers",
+                "proxy",
+                "proxy_http",
+                "rewrite"
+            ],
+
+            "appconfigitems" : [
+                {
+                    "type"         : "tcpport",
+                    "name"         : "main"
+                },
+                {
+                    "type"         : "tcpport",
+                    "name"         : "websocket"
+                },
+                {
+                    "type"         : "file",
+                    "name"         : "${appconfig.apache2.appconfigfragmentfile}",
+                    "template"     : "tmpl/htaccess.tmpl",
+                    "templatelang" : "varsubst"
+                },
+                {
+                    "type"         : "file",
+                    "name"         : "/etc/ubos/open-ports.d/${package.name}-${appconfig.appconfigid}",
+                    "template"     : "tmpl/open-ports.tmpl",
+                    "templatelang" : "varsubst"
+                },
+                {
+                    "type"         : "directory",
+                    "name"         : "${appconfig.datadir}",
+                    "uname"        : "river",
+                    "gname"        : "river"
+                },
+                {
+                    "type"         : "directory",
+                    "name"         : "${appconfig.datadir}/data",
+                    "uname"        : "river",
+                    "gname"        : "river"
+                },
+                {
+                    "type"         : "directory",
+                    "name"         : "${appconfig.datadir}/lists",
+                    "uname"        : "river",
+                    "gname"        : "river",
+                    "retentionpolicy"  : "keep",
+                    "retentionbucket"  : "lists"
+                },
+                {
+                    "type"         : "directory",
+                    "name"         : "${appconfig.datadir}/rivers",
+                    "uname"        : "river",
+                    "gname"        : "river"
+                },
+                {
+                    "type"         : "directory",
+                    "name"         : "${appconfig.datadir}/podcasts",
+                    "uname"        : "river",
+                    "gname"        : "river"
+                },
+                {
+                    "type"         : "directory",
+                    "names"        : [
+                        "${appconfig.datadir}/callbacks",
+                        "${appconfig.datadir}/callbacks/addToRiver",
+                        "${appconfig.datadir}/callbacks/buildRiver"
+                    ]
+                },
+                {
+                    "type"         : "file",
+                    "name"         : "${appconfig.datadir}/config.json",
+                    "template"     : "tmpl/config.json.tmpl",
+                    "templatelang" : "varsubst"
+                },
+                {
+                    "type"         : "systemd-service",
+                    "name"         : "river@${appconfig.appconfigid}",
+                }
+            ]
+        }
+    }
+}

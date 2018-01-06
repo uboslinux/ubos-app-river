@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+
+echo "READING INSTALL"
+
+post_install() {
+    echo RUNNING SYSTEMD-SYSUSERS
+    systemd-sysusers /usr/lib/sysusers.d/river
+}

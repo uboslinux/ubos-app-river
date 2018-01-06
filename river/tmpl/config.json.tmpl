@@ -1,0 +1,61 @@
+{
+    "enabled": true,
+
+    "httpPort": ${appconfig.tcpport.main},
+    "flHttpEnabled": true,
+
+    "webSocketPort": ${appconfig.tcpport.websocket},
+
+    "flWebSocketEnabled": true,
+
+    "dataFolder": "${appconfig.datadir}/data/",
+    "listsFolder": "${appconfig.datadir}/lists/",
+    "riversFolder": "${appconfig.datadir}/rivers/",
+
+    "templatePath": "misc/template.html",
+
+    "addToRiverCallbacksFolder": "${appconfig.datadir}/callbacks/addToRiver/",
+    "buildRiverCallbacksFolder": "${appconfig.datadir}/callbacks/buildRiver/",
+
+    "flAddItemsFromNewSubs": true,
+
+	"maxRiverItems": 300,
+
+    "maxBodyLength": 280,
+
+    "flSkipDuplicateTitles": true,
+
+    "flRequestCloudNotify": true,
+
+    "flMaintainCalendarStructure": false,
+    "flWriteItemsToFiles": false,
+
+    "ctMinutesBetwBuilds": 15,
+    "maxConcurrentFileWrites": 100,
+
+    "urlServerHomePageSource": "http://rss2.io/code/feedtools/misc/serverhomepage.html",
+    "urlDashboardSource": "http://rss2.io/code/feedtools/misc/dashboard.html",
+    "urlFavicon": "http://rss2.io/code/favicon.ico",
+
+    "podcastsFolder": "${appconfig.datadir}/podcasts/",
+    "flDownloadPodcasts": true,
+    "maxFileNameLength": 32,
+    "maxConcurrentPodcastDownloads": 10,
+
+	"homePage": { 
+		"panels": [
+			{
+				"title": "Main",
+				"river": "myOpmlFeeds.js"
+			},
+			{
+				"title": "NYT",
+				"river": "nyt.js"
+			},
+			{
+				"title": "Hacker News",
+				"river": "hn.js"
+			}
+		]
+	}
+}

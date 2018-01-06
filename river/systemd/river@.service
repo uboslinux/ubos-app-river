@@ -3,7 +3,8 @@ Description=River
 
 [Service]
 WorkingDirectory=/var/lib/river/%I
-Exec=/usr/bin/node river5.js
+Environment=NODE_PATH=/usr/share/river/node_modules
+ExecStart=/usr/bin/node /usr/share/river/river5.js
 User=river
 Group=river
 Restart=always

@@ -15,16 +15,21 @@ depends=(
 )
 options=('!strip')
 sha512sums=('SKIP')
+install=river.install
 
 build() {
     cd river5
     npm install
+
+    # npm puts those _where fields everywhere in to package.json, and makepkg does not
+    # like those absolute paths in there. We don't either. So let's take them out:
+    find . -name package.json -exec perl -pi -e 's!^\s*"_where".*$!!g' {} \;
 }
 
 package() {
 # Manifest
-#    mkdir -p ${pkgdir}/var/lib/ubos/manifests
-#    install -m0644 ${startdir}/ubos-manifest.json ${pkgdir}/var/lib/ubos/manifests/${pkgname}.json
+   mkdir -p ${pkgdir}/var/lib/ubos/manifests
+   install -m0644 ${startdir}/ubos-manifest.json ${pkgdir}/var/lib/ubos/manifests/${pkgname}.json
 
 # Icons
 #    mkdir -p ${pkgdir}/srv/http/_appicons/$pkgname
@@ -37,9 +42,12 @@ package() {
     mkdir -p ${pkgdir}/usr/lib/systemd/system
     cp ${startdir}/systemd/*.service ${pkgdir}/usr/lib/systemd/system/
 
+    mkdir -p ${pkgdir}/usr/lib/sysusers.d
+    cp ${startdir}/systemd/sysusers ${pkgdir}/usr/lib/sysusers.d/river
+
 # Templates
-#    mkdir -p ${pkgdir}/usr/share/${pkgname}/tmpl
-#    cp ${startdir}/tmpl/*.tmpl ${pkgdir}/usr/share/${pkgname}/tmpl
+    mkdir -p ${pkgdir}/usr/share/${pkgname}/tmpl
+    cp ${startdir}/tmpl/*.tmpl ${pkgdir}/usr/share/${pkgname}/tmpl
 
 # Code
     mkdir -p ${pkgdir}/usr/share/${pkgname}
