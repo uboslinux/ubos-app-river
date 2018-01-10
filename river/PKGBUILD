@@ -3,7 +3,7 @@ url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
 pkgver=0.5
-pkgrel=1
+pkgrel=2
 _commit=d69d2d083ba0b1dea649285970f508f0893796fc
 pkgdesc="A river-of-news RSS aggregator"
 arch=('any')
@@ -23,7 +23,8 @@ build() {
 
     # npm puts those _where fields everywhere in to package.json, and makepkg does not
     # like those absolute paths in there. We don't either. So let's take them out:
-    find . -name package.json -exec perl -pi -e 's!^\s*"_where".*$!!g' {} \;
+    find . -name package.json -exec perl -pi -e 's,^\s*"_where".*$,,g' {} \;
+    find . -name package.json -exec perl -pi -e "s,$(pwd).*node_modules,/usr/share/${pkgname}/mode_modules,g" {} \;
 }
 
 package() {
@@ -53,4 +54,8 @@ package() {
     mkdir -p ${pkgdir}/usr/share/${pkgname}/bin
     cp -r -p ${srcdir}/river5/* ${pkgdir}/usr/share/${pkgname}/
     install -m755 ${startdir}/bin/* -t ${pkgdir}/usr/share/${pkgname}/bin
+
+# License
+    mkdir -p ${pkgdir}/usr/share/licenses
+    install -m644 ${srcdir}/river5/LICENSE ${pkgdir}/usr/share/licenses/${pkgname}
 }
