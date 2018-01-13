@@ -2,6 +2,8 @@
 #
 # Upon install, populate the lists directory
 #
+# Copyright (C) 2018 and later, Indie Computing Corp. All rights reserved. License: see package.
+#
 
 use strict;
 use warnings;
