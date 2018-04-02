@@ -2,9 +2,13 @@
 Description=River
 
 [Service]
+
+ExecStartPre=/usr/share/ubos-admin/bin/ubos-service-prestart river@%I
+ExecStopPost=/usr/share/ubos-admin/bin/ubos-service-poststop river@%I
+
 WorkingDirectory=/var/lib/river/%I
-Environment=NODE_PATH=/usr/share/river/node_modules
-ExecStart=/usr/bin/node /usr/share/river/river5.js
+Environment=NODE_PATH=/ubos/share/river/node_modules
+ExecStart=/usr/bin/node /ubos/share/river/river5.js
 User=river
 Group=river
 Restart=always

@@ -1,5 +1,0 @@
-#!/usr/bin/bash
-
-post_install() {
-    systemd-sysusers /usr/lib/sysusers.d/river
-}

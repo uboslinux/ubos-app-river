@@ -3,7 +3,7 @@ url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
 pkgver=0.5
-pkgrel=4
+pkgrel=5
 _commit=68a89ff9c7b2dfb1e3b533580eddd52326496a01
 pkgdesc="A river-of-news RSS aggregator"
 arch=('any')
@@ -15,7 +15,6 @@ depends=(
 )
 options=('!strip')
 sha512sums=('SKIP')
-install=river.install
 
 build() {
     cd river5
@@ -24,38 +23,32 @@ build() {
     # npm puts those _where fields everywhere in to package.json, and makepkg does not
     # like those absolute paths in there. We don't either. So let's take them out:
     find . -name package.json -exec perl -pi -e 's,^\s*"_where".*$,,g' {} \;
-    find . -name package.json -exec perl -pi -e "s,$(pwd).*node_modules,/usr/share/${pkgname}/mode_modules,g" {} \;
+    find . -name package.json -exec perl -pi -e "s,$(pwd).*node_modules,/ubos/share/${pkgname}/mode_modules,g" {} \;
 }
 
 package() {
 # Manifest
-   mkdir -p ${pkgdir}/var/lib/ubos/manifests
-   install -m0644 ${startdir}/ubos-manifest.json ${pkgdir}/var/lib/ubos/manifests/${pkgname}.json
+   install -D -m0644 ${startdir}/ubos-manifest.json ${pkgdir}/ubos/lib/ubos/manifests/${pkgname}.json
 
 # Icons
-    mkdir -p ${pkgdir}/srv/http/_appicons/$pkgname
-    install -m644 ${startdir}/appicons/{72x72,144x144}.png ${pkgdir}/srv/http/_appicons/$pkgname/
+    install -D -m0644 ${startdir}/appicons/{72x72,144x144}.png ${pkgdir}/ubos/http/_appicons/${pkgname}/
 
 # Data directory
-    mkdir -p ${pkgdir}/var/lib/${pkgname}
+    mkdir -p ${pkgdir}/ubos/lib/${pkgname}
 
 # Systemd
-    mkdir -p ${pkgdir}/usr/lib/systemd/system
-    cp ${startdir}/systemd/*.service ${pkgdir}/usr/lib/systemd/system/
+    install -D -m0644 ${startdir}/systemd/*.service -t ${pkgdir}/usr/lib/systemd/system/
 
-    mkdir -p ${pkgdir}/usr/lib/sysusers.d
-    cp ${startdir}/systemd/sysusers ${pkgdir}/usr/lib/sysusers.d/river
+    install -D -m0644 ${startdir}/systemd/sysusers ${pkgdir}/usr/lib/sysusers.d/river
 
 # Templates
-    mkdir -p ${pkgdir}/usr/share/${pkgname}/tmpl
-    cp ${startdir}/tmpl/*.tmpl ${pkgdir}/usr/share/${pkgname}/tmpl
+    install -D -m0644 ${startdir}/tmpl/*.tmpl -t ${pkgdir}/ubos/share/${pkgname}/tmpl
 
 # Code
-    mkdir -p ${pkgdir}/usr/share/${pkgname}/bin
-    cp -r -p ${srcdir}/river5/* ${pkgdir}/usr/share/${pkgname}/
-    install -m755 ${startdir}/bin/* -t ${pkgdir}/usr/share/${pkgname}/bin
+    mkdir -p ${pkgdir}/ubos/share/${pkgname}/bin
+    cp -r -p ${srcdir}/river5/* ${pkgdir}/ubos/share/${pkgname}/
+    install -D -m755 ${startdir}/bin/* -t ${pkgdir}/ubos/share/${pkgname}/bin/
 
 # License
-    mkdir -p ${pkgdir}/usr/share/licenses
-    install -m644 ${srcdir}/river5/LICENSE ${pkgdir}/usr/share/licenses/${pkgname}
+    install -D -m644 ${srcdir}/river5/LICENSE -t ${pkgdir}/usr/share/licenses/${pkgname}/
 }
