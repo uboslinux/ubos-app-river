@@ -2,15 +2,13 @@ developer=http://scripting.com/
 url=${developer}
 maintainer=http://indiecomputing.com/
 pkgname=$(basename $(pwd))
-pkgver=0.5.7
+pkgver=0.5.15
 pkgrel=1
-# _commit=68a89ff9c7b2dfb1e3b533580eddd52326496a01
-_tag=v${pkgver}
+_commit=403c5ec3df59cd95c44f28622e8c9944260ba6d0
 pkgdesc="A river-of-news RSS aggregator"
 arch=('any')
 license=("custom:river")
-# source=("git+https://github.com/scripting/river5#commit=${_commit}")
-source=("git+https://github.com/scripting/river5#tag=${_tag}")
+source=("git+https://github.com/scripting/river5#commit=${_commit}")
 releasepage=('https://github.com/scripting/river5/commits/master')
 depends=(
     'nodejs'
