@@ -6,7 +6,7 @@ Description=River
 ExecStartPre=/usr/share/ubos-admin/bin/ubos-service-prestart river@%I
 ExecStopPost=/usr/share/ubos-admin/bin/ubos-service-poststop river@%I
 
-WorkingDirectory=/var/lib/river/%I
+WorkingDirectory=/ubos/lib/river/%I
 Environment=NODE_PATH=/ubos/share/river/node_modules
 ExecStart=/usr/bin/node /ubos/share/river/river5.js
 User=river
